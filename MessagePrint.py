@@ -1,70 +1,80 @@
+from ssl import create_default_context
 from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib import colors
+from reportlab.lib.units import cm
+from reportlab.lib.colors import black, lightgrey
+from reportlab.lib.pagesizes import A4
 
-class Message:
+def drawMyRuler(pdf):
+    
+    # Create a coordinate system for easy reference
+    pdf.drawString(0,0, "0")
+    pdf.drawString(100,0, "100")
+    pdf.drawString(200,0, "200")
+    pdf.drawString(300,0, "300")
+    pdf.drawString(400,0, "400")
+    pdf.drawString(500,0, "500")
+    pdf.drawString(600,0, "600")
 
-    def __init__(self):
-        self.path = "pdf_file/test.pdf"
-        self.list = ['message1','message2','message3','message4','message5','message6','message7',
-                    'message8','message9','message10','message11','message12','message13',
-                    'message9','message10','message11','message12','message13',
-                    'message1','message2','message3','message4','message5','message6','message7',
-                    'message8','message9','message10','message11','message12','message13',
-                    'message9','message10','message11','message12','message13']
-        self.offset_x = 0.4*inch
-        self.offset_y = 0.2*inch
-        self.index = 1
-        self.box_number = 1
 
-    def create_grid(self, canvas):
-        from reportlab.lib.units import inch
-        from reportlab.lib.colors import pink, black, red, blue, green
+    pdf.drawString(0,0,"0")
+    pdf.drawString(0,100,"100")
+    pdf.drawString(0,200,"200")
+    pdf.drawString(0,300,"300")
+    pdf.drawString(0,400,"400")
+    pdf.drawString(0,500,"500")
+    pdf.drawString(0,600,"600")
+    pdf.drawString(0,700,"700")
+    pdf.drawString(0,800,"800")
+    pdf.drawString(0,900,"900")
+    pdf.drawString(0,1000,"1000")
+    pdf.drawString(0,1100,"1100")
 
-        x1, x2, y1, y2 = (0, 2.5, 0, 2.5)
-        index = 1
-        box_number = 1
+def smallGrids():
+    
+    # Create small grids to make it easier to adjust our fonts
+    for i in range(0,10,2):
+        print(i) 
+    
 
-        c = canvas
-        c.setStrokeColor(black)
-        for i in range(len(self.list)):
-            
-            if self.index % 4 != 0:
-                try:
-                    c.grid([x1*inch + self.offset_x, x2*inch + self.offset_x],[y1*inch + self.offset_y, y2*inch + self.offset_y])
-                    print("x1: {value} and x2: {value2}".format(value=(x1+0.4), value2=(x2+0.4)))
-                    x1 += 2.5
-                    x2 += 2.5
-                except:
-                    print("It is not working")
-            elif self.index % 4 == 0:
-                try:
-                    y1 += 2.5
-                    y2 += 2.5
-                    c.grid([x1*inch + self.offset_x, x2*inch + self.offset_x],[y1*inch + self.offset_y, y2*inch + self.offset_y])
-                    print("y1: {value} and y2: {value2}".format(value=y1, value2=y2))
-                    x1, x2 = (0, 2.5)
-                    self.index = 1
-                except:
-                    print("index % 4 == 0 doesnt work")
+def create_grid(pdf):
 
-            if self.box_number % 12 == 0:
-                x1, x2, y1, y2 = (0, 2.5, 0, 2.5)
-                c.showPage()
+    # Create an offset for our grid
+    offset_x = 0.7*cm
+    offset_y = 1*cm
+    
+    # Draw the coordinate system
+    drawMyRuler(pdf)
 
-            self.index += 1
-            self.box_number += 1
-            
-    def create_pdf(self):
+    # Create a grid of 4 columns
+    for i in range(5):
 
-        from reportlab.pdfgen import canvas
-        c = canvas.Canvas("pdf_file/test.pdf")
-        self.create_grid(c)
-        c.showPage()
-        c.save()
+        # Define the width and length of each grid which in this case is 6.5 cm
+        x = y = 6.5*cm
+
+        # Define the columns and rows of the grid
+        x_grid = [x*0, x*1, x*2, x*3]
+        y_grid = [y*0, y*1, y*2, y*3, y*4]
+
+        # Draw the grid onto our pdf file
+        pdf.setStrokeColor(black)
+        pdf.translate(offset_x, offset_y)
+        pdf.grid(x_grid, y_grid)
+        
+        
+        # End page
+        pdf.showPage()
+
+def cookie_project():
+
+    # Create the canvas with the given name
+    pdf = canvas.Canvas("pdf_file/test.pdf", pagesize=A4)
+    create_grid(pdf)
+    pdf.save()
+
 
 
 if __name__ == '__main__':
+    cookie_project()
+    #smallGrids()
 
-    Message().create_pdf()
 
