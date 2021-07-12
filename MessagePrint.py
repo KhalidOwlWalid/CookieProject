@@ -29,27 +29,34 @@ def drawMyRuler(pdf):
     pdf.drawString(0,1000,"1000")
     pdf.drawString(0,1100,"1100")
 
-def smallGrids():
+def smallGrids(pdf):
     
+    pdf.setStrokeColor(lightgrey)
     # Create small grids to make it easier to adjust our fonts
-    for i in range(0,10,2):
-        print(i) 
+    for column in range(0,600, 10):
+        pdf.line(column, 0, column, 900)
+
+    for row in range(0,900,10):
+        pdf.line(0, row, 600, row)
+        
     
 
 def create_grid(pdf):
 
     # Create an offset for our grid
-    offset_x = 0.7*cm
-    offset_y = 1*cm
-    
+    offset_x = 20
+    offset_y = 100 # 3*cm
+
+    # Create a small grids to make it easier for us to position our fonts
+    smallGrids(pdf)
     # Draw the coordinate system
     drawMyRuler(pdf)
 
     # Create a grid of 4 columns
-    for i in range(5):
+    for i in range(1):
 
         # Define the width and length of each grid which in this case is 6.5 cm
-        x = y = 6.5*cm
+        x = y = 180
 
         # Define the columns and rows of the grid
         x_grid = [x*0, x*1, x*2, x*3]
@@ -60,7 +67,6 @@ def create_grid(pdf):
         pdf.translate(offset_x, offset_y)
         pdf.grid(x_grid, y_grid)
         
-        
         # End page
         pdf.showPage()
 
@@ -69,12 +75,13 @@ def cookie_project():
     # Create the canvas with the given name
     pdf = canvas.Canvas("pdf_file/test.pdf", pagesize=A4)
     create_grid(pdf)
+    #smallGrids(pdf)
     pdf.save()
-
 
 
 if __name__ == '__main__':
     cookie_project()
-    #smallGrids()
+    #smallGrids(pdf)
+    print(cm)
 
 
