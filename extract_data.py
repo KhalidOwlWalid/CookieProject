@@ -1,16 +1,10 @@
-import pandas as pd
+from reportlab.pdfgen import canvas
 
-class Excel:
+def test(canvas):
+    from reportlab.lib.units import cm
 
-    def __init__(self):
-        pass
+    c = canvas.Canvas("text_test.pdf")
+    c.showPage()
 
-    def open_an_excel(self, directory):
-        data = pd.read_excel(directory)
-        pass
-
-data = pd.read_excel(r'C:\Users\khali\OneDrive\My Workspace\CookieProject\Cookie Project KMS.xlsx')
-df = pd.DataFrame(data, columns=['name','class', 'recipients', 'recipients_class', 'message'])
-
-data_list = df.values.tolist()
-print(len(data_list))
+if __name__ == '__main__':
+    test(canvas)
