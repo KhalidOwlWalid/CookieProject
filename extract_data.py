@@ -1,10 +1,5 @@
-from reportlab.pdfgen import canvas
+import pandas as pd
 
-def test(canvas):
-    from reportlab.lib.units import cm
+df = pd.read_excel("cookie_project.xlsx")
 
-    c = canvas.Canvas("text_test.pdf")
-    c.showPage()
-
-if __name__ == '__main__':
-    test(canvas)
+print(df.values.tolist())
