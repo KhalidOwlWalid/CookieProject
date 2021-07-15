@@ -65,7 +65,7 @@ class PageFormat:
         self.drawMyRuler()
 
         self.writeNotes()
-
+        '''
         # Create a grid of 4 columns
         for i in range(1):
 
@@ -83,40 +83,107 @@ class PageFormat:
             
             # End page
             self.pdf.showPage()
-
-    def checkMessage(self):
-
-        message = 'My name is Muhammad Khalid Al-Walid and this is just a test for my python program cookie project'
-        words_list = message.split()
-
-        arranged_words = []
-        for word in words_list:
-            pass
-
+        '''
     # writeNotes only return a single message of the sender 
+
     def writeNotes(self):
 
-        x = 30
-
+        x_pos = 30
+        y_pos = 800
+        n_grid = 1
+        n_row = 1
+        num_printedMessage = 0
         font_size = 8
+        offset_x = 20
+        offset_y = 100 # 3*cm
 
+        
         data = ExtractData().compiled_data()
 
-        for n_message in range(len(data)):
-            
-            message = ExtractData().split_message(n_message)
+        while num_printedMessage != len(data):
 
-            textObject = self.pdf.beginText()
-            textObject.setTextOrigin(x,800)
-            x += 180
-            textObject.setFont("Times-Bold", font_size)
-            textObject.textLines('''To : ''' )
-            textObject.textLine("       ")
+            for n_message in range(len(data)):
+                
+                try:
+                    if n_row == 4 and n_grid % 4 == 0:
 
-            for line in message:          
-                textObject.textLine(line)
+                        x_pos = 30
+                        y_pos = 800
+                        n_row = 1
+                        n_grid = 1
 
-            self.pdf.drawText(textObject)
+                        # Define the width and length of each grid which in this case is 6.5 cm
+                        x = y = 180
+
+                        # Define the columns and rows of the grid
+                        x_grid = [x*0, x*1, x*2, x*3]
+                        y_grid = [y*0, y*1, y*2, y*3, y*4]
+
+                        # Draw the grid onto our pdf file
+                        self.pdf.setStrokeColor(black)
+                        self.pdf.translate(offset_x, offset_y)
+                        self.pdf.grid(x_grid, y_grid)
+                
+                        self.pdf.showPage()
+
+                    if n_grid % 4 == 0:
+                        n_grid = 1
+                        n_row += 1
+                        y_pos -= 180
+                        x_pos = 30
+
+                        print("Going next row")
+                        message = ExtractData().split_message(n_message)
+
+                        textObject = self.pdf.beginText()
+                        textObject.setTextOrigin(x_pos,y_pos)
+                        x_pos += 180
+                        textObject.setFont("Times-Bold", font_size)
+                        textObject.textLines('''To : ''' )
+                        textObject.textLine("       ")
+
+                        for line in message:          
+                            textObject.textLine(line)
+
+                        self.pdf.drawText(textObject)
+                        
+
+                    elif n_grid % 4 != 0:
+                        
+                        print("Im here dumbass")
+                        message = ExtractData().split_message(n_message)
+
+                        textObject = self.pdf.beginText()
+                        textObject.setTextOrigin(x_pos,y_pos)
+                        x_pos += 180
+                        textObject.setFont("Times-Bold", font_size)
+                        textObject.textLines('''To : ''' )
+                        textObject.textLine("       ")
+
+                        for line in message:          
+                            textObject.textLine(line)
+
+                        self.pdf.drawText(textObject)
+
+                except:
+                    print(num_printedMessage)
+
+                num_printedMessage += 1
+                n_grid += 1
+
+        x = y = 180
+
+        # Define the columns and rows of the grid
+        x_grid = [x*0, x*1, x*2, x*3]
+        y_grid = [y*0, y*1, y*2, y*3, y*4]
+
+        # Draw the grid onto our pdf file
+        self.pdf.setStrokeColor(black)
+        self.pdf.translate(offset_x, offset_y)
+        self.pdf.grid(x_grid, y_grid)
+
+        self.pdf.showPage()
+
 
     def cookie_project(self):
 

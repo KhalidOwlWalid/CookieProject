@@ -45,6 +45,8 @@ class ExtractData:
         
         # A variable to check the length of a message in our data
         message_length = 0
+        n_grid = 1
+        max_char = 38
 
         sentence = dictionary["Message"][n_message]
         split_string = list(sentence.split(" "))
@@ -65,12 +67,12 @@ class ExtractData:
                 message_length = 0
 
             # Check the length of the total characters in one line so that it does not exceed the grid
-            if message_length <= 35:
+            if message_length <= max_char:
                 new_message.append(word)
                 #print(new_message)
 
             # If it exceeds, clear the new_message list and set the message_length back to zero
-            elif message_length > 35:
+            elif message_length > max_char:
                 new_message.append(word)
                 new_message = ' '.join(new_message)
                 final_message.append(new_message)
@@ -80,3 +82,4 @@ class ExtractData:
         # Will return something like this ['My name is Muhammad Khalid Al-Walid', 
         # 'and this is just a test for my python', 'program cookie project']
         return final_message
+
