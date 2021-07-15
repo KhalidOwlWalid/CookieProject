@@ -21,16 +21,3 @@ def test():
 
     print(dictionary)
 
-
-    
-if __name__ == '__main__':
-    
-    games = []
-    while True:
-        a = input()
-        if a == '':
-            break
-        else:
-            games.append(a)
-
-    print(games)
