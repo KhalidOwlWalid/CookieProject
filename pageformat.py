@@ -60,9 +60,9 @@ class PageFormat:
         offset_y = 100 # 3*cm
 
         # Create a small grids to make it easier for us to position our fonts
-        self.smallGrids()
+        #self.smallGrids()
         # Draw the coordinate system
-        self.drawMyRuler()
+        #self.drawMyRuler()
 
         self.writeNotes()
         '''
@@ -150,7 +150,7 @@ class PageFormat:
 
                     elif n_grid % 4 != 0:
                         
-                        print("Im here dumbass")
+                        print("This is message number: ", num_printedMessage)
                         message = ExtractData().split_message(n_message)
 
                         textObject = self.pdf.beginText()
