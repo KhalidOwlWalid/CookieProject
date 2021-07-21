@@ -1,3 +1,3 @@
-print("Hello World!")
-print("Test on github from ubuntu")
-print("Another test")
+import numpy as np
+
+print(np.pi)
