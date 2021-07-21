@@ -1,3 +1,1 @@
-import numpy as np
-
-print(np.pi)
+print("Alia is the prettiest girl I know")
