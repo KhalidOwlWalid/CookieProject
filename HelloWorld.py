@@ -1,2 +1,10 @@
-print("Alia is the prettiest girl I know")
-print("I love her a lot")
+from reportlab.pdfgen import canvas
+
+def hello(c):
+    c.drawString(100,100, "Hello World")
+
+c = canvas.Canvas("hello_world.pdf")
+
+hello(c)
+c.showPage()
+c.save()

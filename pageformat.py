@@ -16,7 +16,7 @@ class PageFormat:
     def __init__(self):
 
         # Create the canvas with the given name
-        self.pdf = canvas.Canvas("pdf_file/test.pdf", pagesize=A4)
+        self.pdf = canvas.Canvas("pdf_file/tests.pdf", pagesize=A4)
 
     def drawMyRuler(self):
         
